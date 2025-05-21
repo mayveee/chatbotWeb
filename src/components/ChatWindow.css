@@ -1,0 +1,33 @@
+.chat-window {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  margin-left: 0;
+  transition: margin-left 0.3s ease;
+  padding-top: 56px;
+  background-color: #ffffff;
+}
+
+.chat-window.shifted {
+  margin-left: 250px;
+}
+
+.chat-messages {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow-y: auto;
+}
+
+.message-list {
+  width: 100%;
+  max-width: 640px;
+  padding: 80px 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+}
