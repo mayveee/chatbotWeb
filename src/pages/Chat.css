@@ -4,21 +4,3 @@
   background-color: #ffffff;
   font-family: sans-serif;
 }
-
-.chat-main {
-  flex: 1;
-  transition: margin-left 0.3s ease;
-  margin-left: 0;
-  width: 100%;
-}
-
-.chat-main.shifted {
-  margin-left: 250px;
-}
-
-.chat-content {
-  padding-top: 56px;
-  height: calc(100vh - 56px);
-  display: flex;
-  flex-direction: column;
-}

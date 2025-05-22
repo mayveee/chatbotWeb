@@ -21,7 +21,7 @@ export default function ChatWindow({ messages, onSend, onMenuClick, sidebarOpen 
 
   return (
     <div className={`chat-window ${sidebarOpen ? 'shifted' : ''}`}>
-      <TopBar onMenuClick={onMenuClick} />
+      <TopBar onMenuClick={onMenuClick} title='챗봇' />
       <div className="chat-messages">
         <div className="message-list">
           {messages.map((m, i) => (

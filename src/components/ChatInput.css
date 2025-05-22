@@ -35,7 +35,7 @@
   padding: 10px 16px;
   font-size: 16px;
   white-space: nowrap;
-  background-color: #007aff;
+  background-color: #1fdf7f;
   color: #fff;
   border: none;
   border-radius: 20px;
@@ -45,5 +45,5 @@
 }
 
 .chat-input-inner button:hover {
-  background-color: #005ed9;
+  background-color: #1fd47a;
 }

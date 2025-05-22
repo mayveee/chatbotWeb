@@ -1,0 +1,15 @@
+.album-window {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  margin-left: 0;
+  transition: margin-left 0.3s ease;
+  padding-top: 56px;
+  background-color: #ffffff;
+}
+
+.album-window.shifted {
+  margin-left: 250px;
+}

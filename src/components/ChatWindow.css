@@ -23,8 +23,8 @@
 }
 
 .message-list {
-  width: 100%;
-  max-width: 640px;
+  width: 90%;
+  max-width: 750px;
   padding: 80px 24px 16px;
   display: flex;
   flex-direction: column;
