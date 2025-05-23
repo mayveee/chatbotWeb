@@ -12,7 +12,7 @@ export default function Sidebar({ isOpen }: Props) {
   return (
     <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
       <div className="sidebar-content">
-        <h2>챗봇 메뉴</h2>
+        <h2>메뉴</h2>
         <ul className="sidebar-menu">
           <li>
             <Link

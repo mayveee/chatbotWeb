@@ -11,6 +11,7 @@ export default function AlbumWindow({ onMenuClick, sidebarOpen }: Props) {
   const [photos, setPhotos] = useState<string[]>([]);
 
   useEffect(() => {
+    // TODO: 서버로 부터 이미지 fetch 해오기기
     setPhotos([
       'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?w=300&h=300&fit=crop',
       'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=300&h=300&fit=crop',
