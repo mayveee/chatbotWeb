@@ -8,7 +8,7 @@ type Props = {
 export default function ChatMessage({ role, content }: Props) {
     return (
         <div className={`message ${role}`}>
-        <div className="bubble">{content}</div>
+            <div className="bubble">{content}</div>
         </div>
     );
 }

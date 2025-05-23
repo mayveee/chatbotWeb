@@ -5,7 +5,7 @@ import ChatWindow from '../components/ChatWindow';
 import './Chat.css';
 
 export default function Chat() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [messages, setMessages] = useState<{ role: 'user' | 'assistant'; content: string }[]>([]);
 
   const handleSend = (msg: string) => {

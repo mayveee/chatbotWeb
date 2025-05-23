@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import Sidebar from '../components/SideBar';
-import './Album.css';
-import AlbumWindow from '../components/AlbumWindow';
+import './Upload.css';
+import UploadWindow from '../components/UploadWindow';
 
-export default function Album() {
+export default function Upload() {
     const [sidebarOpen, setSidebarOpen] = useState(true);
 
     return (
-        <div className="album-layout">
+        <div className="upload-layout">
             <Sidebar isOpen={sidebarOpen} />
-            <AlbumWindow
+            <UploadWindow
                 onMenuClick={() => setSidebarOpen((prev) => !prev)}
                 sidebarOpen={sidebarOpen}
             />

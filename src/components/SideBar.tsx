@@ -30,6 +30,14 @@ export default function Sidebar({ isOpen }: Props) {
               앨범
             </Link>
           </li>
+          <li>
+            <Link
+              to="/upload"
+              className={`sidebar-item ${location.pathname === '/upload' ? 'active' : ''}`}
+            >
+              이미지 업로드
+            </Link>
+          </li>
         </ul>
       </div>
     </aside>

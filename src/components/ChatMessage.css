@@ -20,10 +20,9 @@
   white-space: pre-wrap;
   line-height: 1.3;
   font-size: 15px;
-  
 }
 
 .message.user .bubble {
-  background-color: #1fdf7f;
+  background-color: #1fd379;
   color: white;
 }
