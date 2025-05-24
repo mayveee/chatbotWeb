@@ -1,6 +1,8 @@
 import { useRef, useState } from 'react';
 import './UploadWindow.css';
 import TopBar from './TopBar';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type Props = {
   onMenuClick: () => void;
@@ -8,41 +10,62 @@ type Props = {
 };
 
 export default function UploadWindow({ onMenuClick, sidebarOpen }: Props) {
-    const [photos, setPhotos] = useState<string[]>([]);
+    const [photos, setPhotos] = useState<File[]>([]);
+    const [previewUrls, setPreviewUrls] = useState<string[]>([]);
     const inputRef = useRef<HTMLInputElement | null>(null);
     
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || []);
-        const readers = files.map(
-        file =>
-            new Promise<string>((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result as string);
-            reader.onerror = () => reject(new Error("파일 읽기 실패"));
-            reader.readAsDataURL(file);
-            })
-        );
+        setPhotos(files);
 
-        Promise.all(readers).then(setPhotos);
+        const urls = files.map(file => URL.createObjectURL(file));
+        setPreviewUrls(urls);
     };
 
     const openFileDialog = () => {
         inputRef.current?.click();
     };
 
-    const handleSubmit = () => {
-        console.log('보낼 이미지 목록:', photos);
-        // TODO: 서버로 전송하는 로직 연결
+    const handleSubmit = async () => {
+        const formData = new FormData();
+        photos.forEach(file => {
+            formData.append('images', file);
+        });
+
+        try {
+            const response = await toast.promise(
+            fetch('https://your-api-server.com/upload', {
+                method: 'POST',
+                body: formData,
+            }),
+            {
+                pending: '업로드 중...',
+                success: '업로드 성공!',
+                error: '업로드 실패!',
+            }
+            );
+
+            if (!response.ok) {
+            const data = await response.json().catch(() => ({}));
+            throw new Error(data.message || `서버 응답 오류 (${response.status})`);
+            }
+
+            setPhotos([]);
+            setPreviewUrls([]);
+        } catch (err) {
+            console.error('네트워크 오류:', err);
+        }
     };
+
 
     return (
         <div className={`upload-window ${sidebarOpen ? 'shifted' : ''}`}>
             <TopBar onMenuClick={onMenuClick} title='이미지 업로드' />
             <div className="photo-grid">
-                {photos.map((src, idx) => (
-                <div className="photo-item" key={idx}>
-                    <img src={src} alt={`Uploaded ${idx}`} />
-                </div>
+                {previewUrls.map((src, idx) => (
+                    <div className="photo-item" key={idx}>
+                        <img src={src} alt={`Uploaded ${idx}`} />
+                    </div>
                 ))}
             </div>
 
@@ -59,6 +82,13 @@ export default function UploadWindow({ onMenuClick, sidebarOpen }: Props) {
             {photos.length > 0 && (
                 <button className="send-fab" onClick={handleSubmit}>➤</button>
             )}
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                closeOnClick
+                pauseOnHover={false}
+                hideProgressBar={false}
+            />
         </div>
     );
 }
