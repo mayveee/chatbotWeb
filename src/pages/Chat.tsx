@@ -8,24 +8,40 @@ export default function Chat() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [messages, setMessages] = useState<{ role: 'user' | 'assistant'; content: string }[]>([]);
 
-  // TODO: 텍스트 전송 시 서버로 부터 응답 받기
-  const handleSend = (msg: string) => {
+  const handleSend = async (msg: string) => {
     setMessages((prev) => [...prev, { role: 'user', content: msg }]);
 
-    // 로딩중 메시지지
+    // 로딩중 메시지
     const loadingMessage = { role: 'assistant' as const, content: '...' };
     setMessages((prev) => [...prev, loadingMessage]);
 
-    // 임시 응답
-    setTimeout(() => {
+    try {
+    const response = await fetch('https://your-api-server.com/chat', { // TODO: 서버 주소 나중에 변경
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message: msg }),
+    });
+
+    const data = await response.json();
+    const answer = data.reply // TODO: 서버 json 필드 네임 수정
+
+    setMessages((prev) => {
+      const updated = [...prev];
+      updated.pop();
+      updated.push({ role: 'assistant', content: answer || '응답이 없습니다.' });
+      return updated;
+    });
+    } catch (error) {
+      console.error('Error:', error);
       setMessages((prev) => {
-        // 로딩 메시지 제거하고 실제 응답 추가
         const updated = [...prev];
         updated.pop();
-        updated.push({ role: 'assistant', content: '이건 예시 응답입니다.' });
+        updated.push({ role: 'assistant', content: '수신 오류가 발생했습니다. 다시 시도해주세요.' });
         return updated;
       });
-    }, 7000);
+    }
   };
 
   return (
