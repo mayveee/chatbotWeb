@@ -46,8 +46,8 @@ export default function UploadWindow({ onMenuClick, sidebarOpen }: Props) {
             );
 
             if (!response.ok) {
-            const data = await response.json().catch(() => ({}));
-            throw new Error(data.message || `서버 응답 오류 (${response.status})`);
+                const data = await response.json().catch(() => ({}));
+                throw new Error(data.message || `서버 응답 오류 (${response.status})`);
             }
 
             setPhotos([]);
