@@ -34,7 +34,7 @@ export default function UploadWindow({ onMenuClick, sidebarOpen }: Props) {
 
         try {
             const response = await toast.promise(
-            fetch('https://your-api-server.com/upload', {
+            fetch('http://127.0.0.1:8000/upload', {
                 method: 'POST',
                 body: formData,
             }),

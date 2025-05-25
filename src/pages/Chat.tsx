@@ -1,5 +1,5 @@
 // pages/Chat.tsx
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Sidebar from '../components/SideBar';
 import ChatWindow from '../components/ChatWindow';
 import './Chat.css';
@@ -7,6 +7,22 @@ import './Chat.css';
 export default function Chat() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [messages, setMessages] = useState<{ role: 'user' | 'assistant'; content: string }[]>([]);
+
+  useEffect(() => {
+    const fetchHistory = async () => {
+      try {
+        const res = await fetch("http://127.0.0.1:8000/chat-history/1234");
+        const data = await res.json();
+        if (Array.isArray(data.messages)) {
+          setMessages(data.messages);
+        }
+      } catch (err) {
+        console.error("초기 대화 내역 불러오기 실패:", err);
+      }
+    };
+
+    fetchHistory();
+  }, []);
 
   const handleSend = async (msg: string) => {
     setMessages((prev) => [...prev, { role: 'user', content: msg }]);
@@ -16,23 +32,23 @@ export default function Chat() {
     setMessages((prev) => [...prev, loadingMessage]);
 
     try {
-    const response = await fetch('https://your-api-server.com/chat', { // TODO: 서버 주소 나중에 변경
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ message: msg }),
-    });
+      const response = await fetch('http://127.0.0.1:8000/match', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: msg }),
+      });
 
-    const data = await response.json();
-    const answer = data.reply // TODO: 서버 json 필드 네임 수정
+      const data = await response.json();
+      const answer = data.reply
 
-    setMessages((prev) => {
-      const updated = [...prev];
-      updated.pop();
-      updated.push({ role: 'assistant', content: answer || '응답이 없습니다.' });
-      return updated;
-    });
+      setMessages((prev) => {
+        const updated = [...prev];
+        updated.pop();
+        updated.push({ role: 'assistant', content: answer || '응답이 없습니다.' });
+        return updated;
+      });
     } catch (error) {
       console.error('Error:', error);
       setMessages((prev) => {
@@ -44,6 +60,8 @@ export default function Chat() {
     }
   };
 
+  
+  
   return (
     <div className="chat-layout">
       <Sidebar isOpen={sidebarOpen} />
