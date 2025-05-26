@@ -6,7 +6,7 @@ import ChatInput from './ChatInput';
 import './ChatWindow.css';
 
 type Props = {
-  messages: { role: 'user' | 'assistant'; content: string }[];
+  messages: { role: 'user' | 'assistant'; content: string | string[]}[];
   onSend: (msg: string) => void;
   onMenuClick: () => void;
   sidebarOpen: boolean;

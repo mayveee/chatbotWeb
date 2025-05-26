@@ -60,3 +60,34 @@
     opacity: 1;
   }
 }
+
+.image-list-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chat-image-wrapper {
+  width: 150px;
+  height: 150px;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+}
+.chat-image-box {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.message.user .chat-image-wrapper {
+  justify-content: flex-end;
+}
+
+.message.assistant .chat-image-wrapper {
+  justify-content: flex-start;
+}
